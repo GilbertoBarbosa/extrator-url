@@ -6,7 +6,7 @@ class ExtratorURL:
         self.valida_url()
 
     def sanitiza_url(self, url):
-        if type(url) == str:
+        if type(url) == str:  # está chamando o método __eq__
             return url.strip()
         else:
             return ""
@@ -44,6 +44,16 @@ class ExtratorURL:
 
         return valor
 
+    # Métodos especiais
+
+    def __len__(self):
+        return len(self.url)
+
+    def __str__(self):
+        return self.url + "\n" + "Parâmetros: " + self.get_url_parametros() + "\n" + "URL Base: " + self.get_url_base()
+
+    def __eq__(self, other):
+        return self.url == other.url
 
 
 
@@ -51,6 +61,20 @@ extrator_url = ExtratorURL("bytebank.com/cambio?moedaDestino=dolar&moedaOrigem=r
 #extrator_url = ExtratorURL("")
 #extrator_url = ExtratorURL(None)
 #extrator_url = ExtratorURL("xxxx")
+print("O tamanho da URL: ", len(extrator_url))
+print(extrator_url)
 
-valor_quantidade = extrator_url.get_valor_parametro("moedaOrigem")
-print(valor_quantidade)
+url = "bytebank.com/cambio?moedaDestino=dolar&moedaOrigem=real&quantidade=100"
+#print(len(url)) # Chama o método especial __len__()
+
+#valor_quantidade = extrator_url.get_valor_parametro("moedaOrigem")
+#print(valor_quantidade)
+
+extrator_url2 = ExtratorURL(url)
+
+# extrator _url.__eq__
+# Compara endereços de memória
+print(extrator_url == extrator_url2)
+
+print(id(extrator_url))
+print(id(extrator_url2))
